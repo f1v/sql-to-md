@@ -1,3 +1,3 @@
 - [Home](/)
-- [Entities](generated/README.md)
+- [Databases](generated/README.md)
 - [Diagrams](diagrams/README.md)

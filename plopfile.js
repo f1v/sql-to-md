@@ -1,4 +1,14 @@
 export default function (plop) {
+  plop.setPartial(
+    'attributeRow',
+    '`{{column.COLUMN_NAME}}` __<small style="color: #8792a2">{{column.DATA_TYPE}}</small>__\n\n{{column.COLUMN_COMMENT}}\n\n---\n',
+  );
+  plop.setPartial(
+    'columnTableRow',
+    '|{{column.COLUMN_NAME}}|{{column.DATA_TYPE}}|{{column.COLUMN_COMMENT}}\n',
+  );
+  plop.setPartial('refTableRow', '|{{ref.COLUMN_NAME}}|{{ref.DATA_TYPE}}|\n');
+
   // controller generator
   plop.setGenerator('table', {
     description: 'table page generator',
@@ -13,7 +23,7 @@ export default function (plop) {
       {
         type: 'add',
         path: 'docs/generated/{{database}}/{{name}}.md',
-        templateFile: 'plop-templates/controller.hbs.md',
+        templateFile: 'src/plop-templates/controller.hbs.md',
       },
     ],
   });

@@ -1,7 +1,10 @@
 import fs from 'fs';
-import path from 'path';
-
 import nodePlop from 'node-plop';
+import path from 'path';
+import buildClassDiagram from './helpers/buildClassDiagram.js';
+import buildSidebar from './helpers/buildSidebar.js';
+import tableConfig from './tableConfig.js';
+
 const plop = await nodePlop(`./plopfile.js`);
 
 const directory = 'docs/generated';
@@ -11,25 +14,28 @@ export default async (databases) => {
   const basicAdd = plop.getGenerator('table');
   const modifySidebar = plop.getGenerator('sidebar');
 
-  fs.rmSync(path.join(directory), { recursive: true, force: true }, (err) => {
-    if (err) throw `Error deleting directory: ${err}`;
-    console.log('Deleted directory: ' + directory);
-  });
-
-  fs.mkdirSync(directory, (err) => {
-    if (err) throw `Error making directory: ${err}`;
-    console.log('Created directory: ' + directory);
-  });
-
-  fs.writeFileSync(path.join(directory, 'README.md'), 'hi');
+  try {
+    fs.rmSync(path.join(directory), { recursive: true, force: true });
+    fs.mkdirSync(directory);
+    fs.writeFileSync(path.join(directory, 'README.md'), 'hi');
+  } catch (e) {
+    throw new Error(e);
+  }
 
   // write to file
   await Promise.all(
     databases.map(async (db) => {
       db.tables.map(async (table) => {
+        const tableMeta = tableConfig[table.name];
         const { failures } = await basicAdd.runActions({
           database: db.database,
+          description: table.TABLE_COMMENT,
+          classDiagram: buildClassDiagram(table),
+          columns: table.columns,
           name: table.name,
+          references: table.relationships.references,
+          title: table.name.replace(/_/g, ' '),
+          ...(tableMeta || {}),
         });
         if (failures.length > 0) {
           failures.forEach((failure) => {
@@ -41,17 +47,9 @@ export default async (databases) => {
   );
 
   // TODO: append synchronosly to sidebar?
-  let sidebarOutput = `- [Home](/)
-- [Entities](/generated/README.md)`;
-  databases.map(async (db) => {
-    db.tables.forEach(
-      (table) =>
-        (sidebarOutput = `${sidebarOutput}
-  - [${db.database}/${table.name}](/generated/${db.database}/${table.name}.md)`),
-    );
-  });
+
   const { failures2 } = await modifySidebar.runActions({
-    list: sidebarOutput,
+    list: buildSidebar(databases),
   });
   if (failures2 && failures2.length > 0) {
     failures2.forEach((failure) => {

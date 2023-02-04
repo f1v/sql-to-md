@@ -25,7 +25,7 @@ const publishDiagram = (dbs) => {
         if (relatedTable.CONSTRAINT_NAME === 'PRIMARY') {
           return;
         }
-        console.log(relatedTable);
+        // console.log(relatedTable);
         diagram += `\n\t${table.name} ||--|| ${relatedTable.REFERENCED_TABLE_NAME} : ${relatedTable.TABLE_NAME}-${relatedTable.COLUMN_NAME} `;
       });
 
