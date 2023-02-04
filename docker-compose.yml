@@ -12,6 +12,8 @@ services:
       MYSQL_DATABASE: hub
     volumes: 
       - ./dumps/:/docker-entrypoint-initdb.d/
+    ports:
+      - 33062:3306
 
   adminer:
     image: adminer
