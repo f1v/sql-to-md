@@ -1,6 +1,4 @@
-# sql-to-md
-
-https://minchulkim87.github.io/mindoc/
+# sql2md
 
 # For Development
 
