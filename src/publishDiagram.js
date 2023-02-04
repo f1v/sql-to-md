@@ -16,14 +16,19 @@ const publishDiagram = (dbs) => {
     console.log('Created directory: ' + directory);
   });
 
+  let sidebarOutput = `# Diagrams\n`;
   dbs.forEach((db) => {
     let diagram = '```mermaid\nerDiagram';
 
     db.tables.forEach((table) => {
       table.relationships.references.forEach((relatedTable) => {
-        diagram += `\n\t${table.name} ||--|| ${relatedTable.REFERENCED_TABLE_NAME} : ${relatedTable.COLUMN_NAME} `;
+        if (relatedTable.CONSTRAINT_NAME === 'PRIMARY') {
+          return;
+        }
+        console.log(relatedTable);
+        diagram += `\n\t${table.name} ||--|| ${relatedTable.REFERENCED_TABLE_NAME} : ${relatedTable.TABLE_NAME}-${relatedTable.COLUMN_NAME} `;
       });
-      
+
       diagram += `\n\t${table.name} {`;
       table.columns.map(
         (column) => (diagram += `\n\t\tstring ${column.COLUMN_NAME}`),
@@ -33,7 +38,9 @@ const publishDiagram = (dbs) => {
 
     diagram += '\n```';
 
-    fs.writeFileSync(path.join(directory, 'README.md'), diagram);
+    fs.writeFileSync(path.join(directory, `${db.database}.md`), diagram);
+    sidebarOutput += `- [${db.database}](diagrams/${db.database}.md)\n`;
   });
+  fs.writeFileSync(path.join(directory, `Readme.md`), sidebarOutput);
 };
 export default publishDiagram;

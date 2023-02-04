@@ -6,7 +6,7 @@ const plop = await nodePlop(`./plopfile.js`);
 
 const directory = 'docs/generated';
 
-export default async (input) => {
+export default async (databases) => {
   // get a generator by name
   const basicAdd = plop.getGenerator('table');
   const modifySidebar = plop.getGenerator('sidebar');
@@ -25,24 +25,31 @@ export default async (input) => {
 
   // write to file
   await Promise.all(
-    input.tables.map(async (table) => {
-      const { failures } = await basicAdd.runActions({ name: table.name });
-      if (failures.length > 0) {
-        failures.forEach((failure) => {
-          console.error(failure.error);
+    databases.map(async (db) => {
+      db.tables.map(async (table) => {
+        const { failures } = await basicAdd.runActions({
+          database: db.database,
+          name: table.name,
         });
-      }
+        if (failures.length > 0) {
+          failures.forEach((failure) => {
+            console.error(failure.error);
+          });
+        }
+      });
     }),
   );
 
   // TODO: append synchronosly to sidebar?
   let sidebarOutput = `- [Home](/)
 - [Entities](/generated/README.md)`;
-  input.tables.forEach(
-    (table) =>
-      (sidebarOutput = `${sidebarOutput}
-  - [${table.name}](/generated/${table.name}.md)`),
-  );
+  databases.map(async (db) => {
+    db.tables.forEach(
+      (table) =>
+        (sidebarOutput = `${sidebarOutput}
+  - [${db.database}/${table.name}](/generated/${db.database}/${table.name}.md)`),
+    );
+  });
   const { failures2 } = await modifySidebar.runActions({
     list: sidebarOutput,
   });
@@ -52,5 +59,5 @@ export default async (input) => {
     });
   }
   // console.log(input.tables[0]);
-  console.log('Success!', input.tables.length, 'files generated');
+  console.log('Success!', databases.length, 'files generated');
 };

@@ -5,6 +5,6 @@ import { parseDatabase } from './parseDatabase.js';
 (async () => {
   const dbs = await parseDatabase();
   console.log(dbs[0].tables);
-  publishMarkdown(dbs[0]);
+  publishMarkdown(dbs);
   publishDiagram(dbs);
 })();

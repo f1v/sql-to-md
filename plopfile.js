@@ -12,7 +12,7 @@ export default function (plop) {
     actions: [
       {
         type: 'add',
-        path: 'docs/generated/{{name}}.md',
+        path: 'docs/generated/{{database}}/{{name}}.md',
         templateFile: 'plop-templates/controller.hbs.md',
       },
     ],
