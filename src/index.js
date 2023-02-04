@@ -115,5 +115,5 @@ const IGNORE_DATABASES = [
     }),
   );
 
-  publishMarkdown(dbSchemas[0]);
+  await publishMarkdown(dbSchemas[0]);
 })();
