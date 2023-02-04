@@ -1,4 +1,2 @@
 - [Home](/)
-- Entities
-  - [Document](document.md)
-  - [DocumentType](documentType.md)
+- [Entities](generated/README.md)
