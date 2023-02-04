@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write . --config config/prettier.config.cjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "docker-compose up -d && nodemon src/index"
   },
@@ -14,5 +15,12 @@
   "dependencies": {
     "mysql2": "^3.1.0",
     "nodemon": "^2.0.20"
+  },
+  "volta": {
+    "node": "18.14.0"
+  },
+  "devDependencies": {
+    "node-plop": "^0.31.0",
+    "prettier": "^2.8.3"
   }
 }

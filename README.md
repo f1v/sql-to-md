@@ -2,8 +2,8 @@
 
 https://minchulkim87.github.io/mindoc/
 
-
 # For Development
+
 Create a dumps folder and toss your test SQL files into that.
 
 ```bash

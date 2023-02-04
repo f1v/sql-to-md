@@ -1,6 +1,5 @@
 version: '3.1'
 services:
-
   db:
     image: mysql
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
@@ -10,7 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: hub
-    volumes: 
+    volumes:
       - ./dumps/:/docker-entrypoint-initdb.d/
     ports:
       - 33062:3306
@@ -19,4 +18,4 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080 
+      - 8080:8080
