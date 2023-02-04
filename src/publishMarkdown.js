@@ -26,7 +26,7 @@ export default async (input) => {
   // write to file
   await Promise.all(
     input.tables.map(async (table) => {
-      const { failures } = await basicAdd.runActions({ name: table.table });
+      const { failures } = await basicAdd.runActions({ name: table.name });
       if (failures.length > 0) {
         failures.forEach((failure) => {
           console.error(failure.error);
@@ -41,7 +41,7 @@ export default async (input) => {
   input.tables.forEach(
     (table) =>
       (sidebarOutput = `${sidebarOutput}
-  - [${table.table}](/generated/${table.table}.md)`),
+  - [${table.name}](/generated/${table.name}.md)`),
   );
   const { failures2 } = await modifySidebar.runActions({
     list: sidebarOutput,
