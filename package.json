@@ -21,6 +21,9 @@
     "node": "18.14.0"
   },
   "devDependencies": {
+    "docsify-cli": "^4.4.4",
+    "inquirer": "^9.1.4",
+    "inquirer-file-tree-selection-prompt": "^2.0.5",
     "node-plop": "^0.31.0",
     "prettier": "^2.8.3"
   }

@@ -9,7 +9,6 @@ export default function (plop) {
   );
   plop.setPartial('refTableRow', '|{{ref.COLUMN_NAME}}|{{ref.DATA_TYPE}}|\n');
 
-  // controller generator
   plop.setGenerator('table', {
     description: 'table page generator',
     prompts: [
@@ -23,7 +22,7 @@ export default function (plop) {
       {
         type: 'add',
         path: 'docs/generated/{{database}}/{{name}}.md',
-        templateFile: 'src/plop-templates/controller.hbs.md',
+        templateFile: 'src/plop-templates/tablePage.hbs.md',
       },
     ],
   });
