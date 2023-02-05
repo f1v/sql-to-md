@@ -1,7 +1,7 @@
 export default function (plop) {
   plop.setPartial(
     'attributeRow',
-    '`{{column.COLUMN_NAME}}` __<small style="color: #8792a2">{{column.DATA_TYPE}}</small>__\n\n{{column.COLUMN_COMMENT}}\n\n---\n',
+    '`{{column.COLUMN_NAME}}` __<small style="color: #8792a2">{{column.DATA_TYPE}}</small>__\n\n{{{column.COLUMN_COMMENT}}} The id of the comment that we are about to display.\n\n---\n',
   );
   plop.setPartial(
     'columnTableRow',

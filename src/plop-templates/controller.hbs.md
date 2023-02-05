@@ -1,4 +1,4 @@
-## {{titleCase title}}
+## {{titleCase title}} <small>`{{database}}.{{name}}`</small>
 
 
 
@@ -28,11 +28,10 @@
 <!-- panels:start -->
 <!-- div:title-panel -->
 
-## The {{title}} object
+#### Attributes
 
 <!-- div:left-panel -->
 
-#### Attributes
 
 {{#each columns}}
 {{> attributeRow column=. }}
@@ -41,30 +40,18 @@
 
 <!-- div:right-panel -->
 
+#### Code Samples
+
 ```sql
-SELECT * FROM hub.{{name}};
+SELECT * FROM `{{database}}.{{name}}`;
 ```
 
-
-```sql
-SELECT * FROM hub.document WHERE documentTypeId='';
+```js
+const test = () => {
+    const me = 'me';
+    return me;
+}
 ```
 
 <!-- panels:end -->
 
-
-
-### Constraints
-
-{{ constraintsTable }}
-
-### References
-| name | references |
-| ---- | ---------- |
-{{#each references}}
-{{> refTableRow ref=. }}
-{{/each}}
-
-### Is referenced by
-
-- refBy 1
